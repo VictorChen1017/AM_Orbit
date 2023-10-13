@@ -18,9 +18,11 @@ from osgeo import gdal
 # from osgeo import osr
 # from osgeo import gdal_array
 # from osgeo import gdalconst
-
-import sys
 # import numpy as np
+import sys
+
+
+
 
 def extractElevationFromDEM(path:str,x_coords:list[float],y_coords:list[float])->list[float|int]:
     '''
@@ -79,4 +81,12 @@ def extractElevationFromDEM(path:str,x_coords:list[float],y_coords:list[float])-
         elev.append(value)
 
     return elev
+
+def convertToTerrainFollowingMission(elev,extractElevationFromDEM):
+    base_hight = elev[0]
+    delta_hight = elev
+    for i in range(0,len(delta_hight)):
+        delta_hight[i] = elev[i]-base_hight # calculate difference between orignal hight dem and way pts
+    
+    return delta_hight
 
