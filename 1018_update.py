@@ -96,7 +96,7 @@ def main(demPath:Path,missionPath:Path,outputPath:Path)->None:
     for i in range(0,len(delta_hight)):
         delta_hight[i] = result[i]-base_hight
     # print(delta_hight) # difference between orignal hight dem and way pts
-    flypath["new_elev"] = flypath["altitude(m)"]+delta_hight # edit heights
+    flypath["altitude(m)"] = flypath["altitude(m)"]+delta_hight # edit heights
     #print(flypath["new_elev"])
     ### Create and merge the following script to method 'LMIO.LitchiMission.save()'
     flypath.to_csv(outputPath, index=True)
