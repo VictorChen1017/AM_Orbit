@@ -36,7 +36,7 @@ def extract(path:str,x_coords:list[float],y_coords:list[float])->list[float|int]
     # this allows GDAL to throw Python Exceptions
     gdal.UseExceptions()
     try:
-        src_ds = gdal.Open(path)
+        src_ds = gdal.Open(str(path))
     except RuntimeError as e:
         print('Unable to open INPUT.tif')
         print(e)
@@ -75,7 +75,7 @@ def main(demPath:Path,missionPath:Path,outputPath:Path)->None:
     """
     """
     ### Create and merge the following script to method 'LMIO.LitchiMission.read()'
-    flypath = pd.read_csv(flyPath) 
+    flypath = pd.read_csv(missionPath) 
     
     ### Create and merge the following script to attribute 'LMIO.LitchiMission.WaypointsXY'
     geometry = [Point(xy) for xy in zip(flypath["longitude"], flypath["latitude"])] # longitude(x), latitude(y) Column name in Litchi csv format
@@ -126,25 +126,23 @@ def parseCommandArgs()->argparse.Namespace:
     https://docs.python.org/3/howto/argparse.html
 
     """
-    parser = argparse.ArgumentParser(description='...')
-    parser.add_argument('DEM',action='store',type=Path,dest='demPath',help='The DEM path.')
-    # parser.add_argument(...)
-    # parser.add_argument(...)
-    # ...
-    raise NotImplementedError
-    # return parser.parse_args()
+    parser = argparse.ArgumentParser(description='this is a description')
+    parser.add_argument('DEM',action='store',type=Path,help='The DEM path.')
+    parser.add_argument('FlyRoute',action='store',type=Path,help='The FlyRoute path.')
+    parser.add_argument('outputPath',action='store',type=Path,help='The output path.')
+    return parser.parse_args()
 
 def main_cmd():
     """ main in command line mode
     讀取命令列輸入的變數
     """
     args:argparse.Namespace = parseCommandArgs()
-    raise NotImplementedError
-    # main(...)
+    #print(args.DEM,args.FlyRoute,args.outputPath)
+    main(args.DEM,args.FlyRoute,args.outputPath)
 
 
 if __name__ == '__main__':
     ## command line mode
-    # main_cmd()
+    main_cmd()
     ## in-line mode
-    main_inline()
+    #main_inline()
