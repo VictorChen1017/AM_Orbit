@@ -8,7 +8,7 @@ A functional script to add the terrain information to litchi flight route.
 # built in
 import sys
 import numpy as np
-from pahlib import Path
+from pathlib import Path
 import argparse
 # 3rd party
 import pandas as pd
@@ -117,17 +117,30 @@ def main_inline()->None:
 
 def parseCommandArgs()->argparse.Namespace:
     """ Parse the command line arguments using argparse
+    用途：定義並且處理命令列參數。
+    命令列傳入文法：
+        `python ./1018_update.py DEM_Path FlyPath OutputPath`
+    此處僅有位置變數（跟傳入順序有關）而沒有選擇參數（和參數的前綴名稱有關如「-h」，而與位置無關），目前程式已經新增「DEM」變數，可如法炮製另外兩個變數。
+    
+    新增參數的方法請參考:
+    https://docs.python.org/3/howto/argparse.html
+
     """
-    parser = argparse.ArgumentParser(description='')
+    parser = argparse.ArgumentParser(description='...')
     parser.add_argument('DEM',action='store',type=Path,dest='demPath',help='The DEM path.')
+    # parser.add_argument(...)
+    # parser.add_argument(...)
     # ...
     raise NotImplementedError
+    # return parser.parse_args()
 
 def main_cmd():
     """ main in command line mode
+    讀取命令列輸入的變數
     """
-    args = parseCommandArgs()
+    args:argparse.Namespace = parseCommandArgs()
     raise NotImplementedError
+    # main(...)
 
 
 if __name__ == '__main__':
